@@ -14,6 +14,7 @@ public class Dot extends Circle{
 		this.color = color;
 		this.setRadius(10);
 		this.setFill(color);
+		this.setRadius(15);
 		if (color != DotColor.instance.transparent) {
 			this.setStroke(Color.BLACK);
 			this.setStrokeWidth(0.5);

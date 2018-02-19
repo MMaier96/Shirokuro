@@ -5,7 +5,7 @@ import java.io.IOException;
 import application.config.AppConfig;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Application extends javafx.application.Application {
@@ -13,7 +13,7 @@ public class Application extends javafx.application.Application {
 	private String[] arguments;
 	private Stage primaryStage;
 	private AppConfig appConfig;
-	private HBox root;	
+	private StackPane root;	
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -44,6 +44,7 @@ public class Application extends javafx.application.Application {
 		}
 		Scene scene = new Scene(root, appConfig.gridWidth+300, appConfig.gridWidth);
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 
