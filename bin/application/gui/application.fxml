@@ -52,7 +52,7 @@
                               <Insets right="15.0" />
                            </padding>
                         </Label>
-                        <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="0" wrapText="true">
+                        <Label fx:id="iterations" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="0" wrapText="true">
                            <padding>
                               <Insets left="15.0" />
                            </padding>
@@ -69,7 +69,7 @@
                               <Insets right="15.0" />
                            </padding>
                         </Label>
-                        <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="0" wrapText="true">
+                        <Label fx:id="fitness" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="0" wrapText="true">
                            <padding>
                               <Insets left="15.0" />
                            </padding>
@@ -86,7 +86,7 @@
                               <Insets right="15.0" />
                            </padding>
                         </Label>
-                        <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Idle" wrapText="true">
+                        <Label fx:id="status" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" text="Idle" wrapText="true">
                            <padding>
                               <Insets left="15.0" />
                            </padding>
@@ -98,7 +98,7 @@
                   </HBox>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#btnSolveClicked" text="Solve Field" />
+                        <Button fx:id="solveButton" mnemonicParsing="false" onAction="#btnSolveClicked" text="Solve Field" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" top="10.0" />
