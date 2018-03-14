@@ -1,4 +1,4 @@
-package application.genetic;
+package application.genetic.objects;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import application.Application;
 import application.config.AppConfig;
-import application.genetic.GeneticConfig;
+import application.genetic.config.GeneticConfig;
 import application.gui.objects.Dot;
 import application.gui.objects.DotConnector;
 import application.gui.objects.DotList;
@@ -101,7 +101,7 @@ public class GuiController {
 	public void setConfiguration(int iterationCounter, int fitnessText) {
 		iterations.setText(iterationCounter + "");
 		fitness.setText(fitnessText + "/" + GeneticConfig.MAX_FINTNESS);
-		fitnessRelative.setText(Math.round(((double)fitnessText / GeneticConfig.MAX_FINTNESS * 100)) + "%");
+		fitnessRelative.setText(Math.round(((double) fitnessText / GeneticConfig.MAX_FINTNESS * 100)) + "%");
 	}
 
 	/**
@@ -111,5 +111,10 @@ public class GuiController {
 	 */
 	public void setStatus(String statusText) {
 		status.setText(statusText);
+	}
+
+	public void setFinish() {
+		status.setText("finished");
+		solveButton.setDisable(false);
 	}
 }

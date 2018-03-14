@@ -1,7 +1,12 @@
 package application.genetic;
 
 import application.Application;
+import application.genetic.config.GeneticConfig;
 import application.genetic.crossover.Crossover;
+import application.genetic.mutation.Mutator;
+import application.genetic.objects.Gene;
+import application.genetic.objects.Individual;
+import application.genetic.objects.Population;
 import application.genetic.selection.Selector;
 import application.genetic.tournament.Tournament;
 import application.gui.controller.GuiController;
@@ -34,6 +39,19 @@ public class GeneticAlgorithm implements Runnable {
 			return;
 
 		startAlgorithm();
+		
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				controller.clearDotConnectors();
+				controller.setConfiguration(totalIterations, bestIndividual.getFitness());
+				for (Gene _gene : bestIndividual.getGenes()) {
+					controller.addConnector(_gene.getX1(), _gene.getX2(), _gene.getY1(), _gene.getY2());
+				}
+				controller.setFinish();
+			}
+			
+		});
 	}
 
 	private void startAlgorithm() {
@@ -50,8 +68,8 @@ public class GeneticAlgorithm implements Runnable {
 		crossover = new Crossover();
 		tournament = new Tournament();
 
-		for (int iterationCounter = 0; iterationCounter < GeneticConfig.ITERATIONS; iterationCounter++) {
-			if (iterationCounter > 0) {
+		for (int iterationCounter = 1; iterationCounter <= GeneticConfig.ITERATIONS; iterationCounter++) {
+			if (iterationCounter > 1) {
 				population.getIndividuals().set(0, bestIndividual);
 			}
 			totalIterations = iterationCounter;

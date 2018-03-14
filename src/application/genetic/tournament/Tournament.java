@@ -5,9 +5,9 @@ package application.genetic.tournament;
 import java.util.Collections;
 import java.util.Comparator;
 
-import application.genetic.GeneticConfig;
-import application.genetic.Individual;
-import application.genetic.Population;
+import application.genetic.config.GeneticConfig;
+import application.genetic.objects.Individual;
+import application.genetic.objects.Population;
 
 public class Tournament {
 	private Population population;

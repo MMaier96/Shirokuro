@@ -1,6 +1,8 @@
-package application.genetic;
+package application.genetic.objects;
 
 import java.util.ArrayList;
+
+import application.genetic.config.GeneticConfig;
 
 public class Population {
 

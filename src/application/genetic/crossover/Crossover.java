@@ -1,7 +1,7 @@
 package application.genetic.crossover;
 
-import application.genetic.Gene;
-import application.genetic.Individual;
+import application.genetic.objects.Gene;
+import application.genetic.objects.Individual;
 
 public class Crossover {
 

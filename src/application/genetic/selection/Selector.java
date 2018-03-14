@@ -2,8 +2,8 @@ package application.genetic.selection;
 
 import java.util.Random;
 
-import application.genetic.Individual;
-import application.genetic.Population;
+import application.genetic.objects.Individual;
+import application.genetic.objects.Population;
 
 public class Selector {
 

@@ -1,6 +1,9 @@
-package application.genetic;
+package application.genetic.mutation;
 
 import java.util.Random;
+
+import application.genetic.config.GeneticConfig;
+import application.genetic.objects.Population;
 
 public class Mutator {
 

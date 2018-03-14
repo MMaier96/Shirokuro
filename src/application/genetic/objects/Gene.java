@@ -1,4 +1,4 @@
-package application.genetic;
+package application.genetic.objects;
 
 public class Gene {
 	
