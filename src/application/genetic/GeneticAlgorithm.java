@@ -17,6 +17,7 @@ public class GeneticAlgorithm implements Runnable {
 	private Crossover crossover;
 	private Tournament tournament;
 	private int totalIterations;
+	private Individual bestIndividual;
 
 	public GeneticAlgorithm(Application app) {
 		this.app = app;
@@ -37,20 +38,22 @@ public class GeneticAlgorithm implements Runnable {
 
 	private void startAlgorithm() {
 
-		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				controller.setStatus("processing ...");
 			}
 		});
-		
+
 		population = createNewPopulation();
 		selector = new Selector();
 		crossover = new Crossover();
 		tournament = new Tournament();
 
 		for (int iterationCounter = 0; iterationCounter < GeneticConfig.ITERATIONS; iterationCounter++) {
+			if (iterationCounter > 0) {
+				population.getIndividuals().set(0, bestIndividual);
+			}
 			totalIterations = iterationCounter;
 			selector.setPopulation(population);
 			selector.select();
@@ -62,28 +65,32 @@ public class GeneticAlgorithm implements Runnable {
 			}
 
 			// mutate
-
+			if (iterationCounter % 500 == 0) {
+				Mutator mutator = new Mutator();
+				mutator.setPopulation(population);
+				population = mutator.mutate();
+			}
 			// turnament
 
 			tournament.setPopulation(population);
 			tournament.doTournament();
 
+			if (bestIndividual == null
+					|| bestIndividual.getFitness() < population.getIndividuals().get(0).getFitness()) {
+				bestIndividual = population.getIndividuals().get(0);
+			}
 			if (iterationCounter % 100 == 0) {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
 						controller.clearDotConnectors();
-						controller.setConfiguration(totalIterations, population.getIndividuals().get(0).getFitness());
-						for (Gene _gene : population.getIndividuals().get(0).getGenes()) {
+						controller.setConfiguration(totalIterations, bestIndividual.getFitness());
+						for (Gene _gene : bestIndividual.getGenes()) {
 							controller.addConnector(_gene.getX1(), _gene.getX2(), _gene.getY1(), _gene.getY2());
 						}
 					}
 				});
-				try {
-					Thread.sleep(250);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+
 			}
 		}
 	}

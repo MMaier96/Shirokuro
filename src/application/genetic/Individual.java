@@ -36,25 +36,23 @@ public class Individual {
 
 	public void createRemainingGenes() {
 		ArrayList<Dot> dotlist = DotList.getClonedDotlist();
-
 		// remove dots from existing genes
-		dotlist: for (Gene _gene : genes) {
+		for (Gene _gene : genes) {
 			for (int i = 0; i < dotlist.size(); i++) {
-				if (dotlist.get(i).getX() == _gene.getX2()) {
-					if (dotlist.get(i).getY() == _gene.getY2()) {
-						dotlist.remove(i);
-						continue dotlist;
-					}
-				} else if (dotlist.get(i).getX() == _gene.getX1()) {
-					if (dotlist.get(i).getY() == _gene.getY1()) {
-						dotlist.remove(i);
-						continue dotlist;
-					}
+				if (dotIsEqalGene(dotlist.get(i), _gene)) {
+					dotlist.remove(i);
+					break;
+				}
+			}
+			for (int i = 0; i < dotlist.size(); i++) {
+				if (dotIsEqalGene(dotlist.get(i), _gene)) {
+					dotlist.remove(i);
+					break;
 				}
 			}
 		}
 
-		// combine rest dots as new genes
+		// combine remaining dots as new genes
 		Dot dot1, dot2;
 		int sizeBefore = genes.size();
 		for (int i = 0; i < 27 - sizeBefore; i++) {
@@ -62,6 +60,15 @@ public class Individual {
 			dot2 = popFromDotList(dotlist);
 			genes.add(new Gene(dot1.getX(), dot1.getY(), dot2.getX(), dot2.getY()));
 		}
+	}
+
+	private boolean dotIsEqalGene(Dot dot, Gene _gene) {
+		if (_gene.getX1() == dot.getX() && _gene.getY1() == dot.getY()) {
+			return true;
+		} else if (_gene.getX2() == dot.getX() && _gene.getY2() == dot.getY()) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -75,48 +82,50 @@ public class Individual {
 		geneLoop: for (Gene _gene : genes) {
 			if (isGeneMonochrome(_gene)) {
 				continue geneLoop;
-			} else {
-				fitness += 1;
 			}
-			
+			fitness += 1;
 
 			if (isVertical(_gene)) {
-				fitness += 5;
-
+				fitness += 1;
 				if (isDotBetweenVertical(_gene)) {
 					continue geneLoop;
-				} else {
-					fitness += 10;
 				}
+				fitness += 1;
 
 				for (Gene _gene2 : genes) {
+					if (_gene2.equals(_gene)) {
+						continue;
+					}
 					if (isHorizontal(_gene2)) {
-						if (!isBetween(_gene2.getY1(), _gene.getY1(), _gene.getY2())) {
-							if (!isBetween(_gene.getX1(), _gene2.getX1(), _gene2.getX2())) {
+						if (isBetween(_gene2.getY1(), _gene.getY1(), _gene.getY2())) {
+							if (isBetween(_gene.getX1(), _gene2.getX1(), _gene2.getX2())) {
 								continue geneLoop;
 							}
 						}
 					}
 				}
-				fitness += 20;
+				fitness += 10;
 			} else if (isHorizontal(_gene)) {
+				fitness += 1;
 
 				if (isDotBetweenHorizontal(_gene)) {
 					continue geneLoop;
-				} else {
-					fitness += 10;
 				}
+				fitness += 1;
 
 				for (Gene _gene2 : genes) {
+					if (_gene2.equals(_gene)) {
+						continue;
+					}
 					if (isVertical(_gene2)) {
-						if (!isBetween(_gene2.getX1(), _gene.getX1(), _gene.getX2())) {
-							if (!isBetween(_gene.getY1(), _gene2.getY1(), _gene2.getY2())) {
+						if (isBetween(_gene2.getX1(), _gene.getX1(), _gene.getX2())) {
+							if (isBetween(_gene.getY1(), _gene2.getY1(), _gene2.getY2())) {
 								continue geneLoop;
 							}
 						}
 					}
 				}
-				fitness += 20;
+				fitness += 10;
 			}
 		}
 		return fitness;
@@ -205,5 +214,37 @@ public class Individual {
 			}
 		}
 		return false;
+	}
+	
+	public static Individual getPerfectIndividual() {
+		Individual individual = new Individual();
+		individual.addGene(new Gene(0, 0, 0, 1));
+		individual.addGene(new Gene(0,2,0,4));
+		individual.addGene(new Gene(0,6,0,7));
+		individual.addGene(new Gene(0,8,0,9));
+		individual.addGene(new Gene(1,0,1,2));
+		individual.addGene(new Gene(1,3,1,6));
+		individual.addGene(new Gene(1,7,1,8));
+		individual.addGene(new Gene(2,5,2,8));
+		individual.addGene(new Gene(3,0,5,0));
+		individual.addGene(new Gene(6,0,8,0));
+		individual.addGene(new Gene(9,0,9,2));
+		individual.addGene(new Gene(8,1,8,2));
+		individual.addGene(new Gene(9,3,6,3));
+		individual.addGene(new Gene(6,1,7,1));
+		individual.addGene(new Gene(4,2,6,2));
+		individual.addGene(new Gene(3,3,3,6));
+		individual.addGene(new Gene(3,7,3,8));
+		individual.addGene(new Gene(3,9,4,9));
+		individual.addGene(new Gene(6,9,7,9));
+		individual.addGene(new Gene(8,9,8,8));
+		individual.addGene(new Gene(5,9,5,7));
+		individual.addGene(new Gene(9,7,9,6));
+		individual.addGene(new Gene(9,5,6,5));
+		individual.addGene(new Gene(7,4,6,4));
+		individual.addGene(new Gene(5,4,5,5));
+		individual.addGene(new Gene(4,6,7,6));
+		individual.addGene(new Gene(7,7,8,7));
+		return individual;
 	}
 }
